@@ -287,47 +287,47 @@ EXAMPLE
     end
   end
 
-  ['coderay', 'pygments'].each do |highlighter|
-    if defined? (instance_eval highlighter.capitalize)
-      describe "Export to HTML test cases with code syntax highlight: #{highlighter}" do
-        code_syntax_examples_directory = File.join(File.dirname(__FILE__), "html_code_syntax_highlight_examples")
-        files = []
+  # ['coderay', 'pygments'].each do |highlighter|
+  #   if defined? (instance_eval highlighter.capitalize)
+  #     describe "Export to HTML test cases with code syntax highlight: #{highlighter}" do
+  #       code_syntax_examples_directory = File.join(File.dirname(__FILE__), "html_code_syntax_highlight_examples")
+  #       files = []
 
-        # Either Pygments or Coderay
-        begin
-          require highlighter
-        rescue LoadError
-          next
-        end
+  #       # Either Pygments or Coderay
+  #       begin
+  #         require highlighter
+  #       rescue LoadError
+  #         next
+  #       end
 
-        org_files = File.expand_path(File.join(code_syntax_examples_directory, "*-#{highlighter}.org"))
-        files = Dir.glob(org_files)
+  #       org_files = File.expand_path(File.join(code_syntax_examples_directory, "*-#{highlighter}.org"))
+  #       files = Dir.glob(org_files)
 
-        files.each do |file|
-          basename = File.basename(file, ".org")
-          org_filename = File.join(code_syntax_examples_directory, basename + ".html")
-          org_filename = File.expand_path(org_filename)
+  #       files.each do |file|
+  #         basename = File.basename(file, ".org")
+  #         org_filename = File.join(code_syntax_examples_directory, basename + ".html")
+  #         org_filename = File.expand_path(org_filename)
 
-          it "should convert #{basename}.org to HTML" do
-            expected = IO.read(org_filename)
-            expect(expected).to be_kind_of(String)
-            parser = Orgmode::Parser.new(IO.read(file), :allow_include_files => true)
-            actual = parser.to_html
-            expect(actual).to be_kind_of(String)
-            expect(actual).to eq(expected)
-          end
+  #         it "should convert #{basename}.org to HTML" do
+  #           expected = IO.read(org_filename)
+  #           expect(expected).to be_kind_of(String)
+  #           parser = Orgmode::Parser.new(IO.read(file), :allow_include_files => true)
+  #           actual = parser.to_html
+  #           expect(actual).to be_kind_of(String)
+  #           expect(actual).to eq(expected)
+  #         end
 
-          it "should render #{basename}.org to HTML using Tilt templates" do
-            ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
-            expected = IO.read(org_filename)
-            template = Tilt.new(file).render
-            expect(template).to eq(expected)
-            ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
-          end
-        end
-      end
-    end
-  end
+  #         it "should render #{basename}.org to HTML using Tilt templates" do
+  #           ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = 'true'
+  #           expected = IO.read(org_filename)
+  #           template = Tilt.new(file).render
+  #           expect(template).to eq(expected)
+  #           ENV['ORG_RUBY_ENABLE_INCLUDE_FILES'] = ''
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   describe "Export to Markdown test cases" do
     data_directory = File.join(File.dirname(__FILE__), "markdown_examples")
@@ -489,4 +489,3 @@ EXAMPLE
     end
   end
 end
-

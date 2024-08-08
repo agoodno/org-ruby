@@ -100,7 +100,7 @@ module Orgmode
       @parser_options = parser_options
 
       #
-      # Include file feature disabled by default since 
+      # Include file feature disabled by default since
       # it would be dangerous in some environments
       #
       # http://orgmode.org/manual/Include-files.html
@@ -129,7 +129,7 @@ module Orgmode
 
     # Check include file availability and permissions
     def check_include_file(file_path)
-      can_be_included = File.exists? file_path
+      can_be_included = File.exist? file_path
 
       if not ENV['ORG_RUBY_INCLUDE_ROOT'].nil?
         # Ensure we have full paths
@@ -377,8 +377,8 @@ module Orgmode
       output << "\n"
 
       return output if @parser_options[:skip_rubypants_pass]
-        
-      rp = RubyPants.new(output) 
+
+      rp = RubyPants.new(output)
       rp.to_html
     end
 
